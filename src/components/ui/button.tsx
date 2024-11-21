@@ -4,6 +4,19 @@ import { Center, styled } from 'styled-system/jsx'
 import { Spinner } from './spinner'
 import { Button as StyledButton, type ButtonProps as StyledButtonProps } from './styled/button'
 
+function ButtonSpinner() {
+  return (
+    <Center inline position="absolute" transform="translate(-50%, -50%)" top="50%" insetStart="50%">
+      <Spinner
+        width="1.1em"
+        height="1.1em"
+        borderWidth="1.5px"
+        borderTopColor="fg.disabled"
+        borderRightColor="fg.disabled"
+      />
+    </Center>
+  )
+}
 interface ButtonLoadingProps {
   loading?: boolean
   loadingText?: JSX.Element
@@ -11,7 +24,7 @@ interface ButtonLoadingProps {
 
 export interface ButtonProps extends StyledButtonProps, ButtonLoadingProps {}
 
-export const Button = (props: ButtonProps) => {
+export function Button(props: ButtonProps) {
   const [localProps, rest] = splitProps(props, ['loading', 'disabled', 'loadingText', 'children'])
   const trulyDisabled = () => localProps.loading || localProps.disabled
 
@@ -29,15 +42,3 @@ export const Button = (props: ButtonProps) => {
     </StyledButton>
   )
 }
-
-const ButtonSpinner = () => (
-  <Center inline position="absolute" transform="translate(-50%, -50%)" top="50%" insetStart="50%">
-    <Spinner
-      width="1.1em"
-      height="1.1em"
-      borderWidth="1.5px"
-      borderTopColor="fg.disabled"
-      borderRightColor="fg.disabled"
-    />
-  </Center>
-)

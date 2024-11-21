@@ -1,24 +1,26 @@
-import { type JSX, createContext, useContext } from 'solid-js'
+import type { ElementType, StyledComponent } from 'styled-system/types'
+import { createContext, type JSX, useContext } from 'solid-js'
 import { Dynamic } from 'solid-js/web'
 import { cx } from 'styled-system/css'
 import { isCssProperty, styled } from 'styled-system/jsx'
-import type { ElementType, StyledComponent } from 'styled-system/types'
 
 type Props = Record<string, unknown>
-type Recipe = {
+interface Recipe {
   (props?: Props): Props
   splitVariantProps: (props: Props) => [Props, Props]
 }
 
 type Slot<R extends Recipe> = keyof ReturnType<R>
-type Options = { forwardProps?: string[] }
+interface Options { forwardProps?: string[] }
 
-const shouldForwardProp = (prop: string, variantKeys: string[], options: Options = {}) =>
-  options.forwardProps?.includes(prop) || (!variantKeys.includes(prop) && !isCssProperty(prop))
+function shouldForwardProp(prop: string, variantKeys: string[], options: Options = {}) {
+  return options.forwardProps?.includes(prop) || (!variantKeys.includes(prop) && !isCssProperty(prop))
+}
 
-export const createStyleContext = <R extends Recipe>(recipe: R) => {
+export function createStyleContext<R extends Recipe>(recipe: R) {
   const StyleContext = createContext<Record<Slot<R>, string> | null>(null)
 
+  // eslint-disable-next-line ts/no-empty-object-type
   const withRootProvider = <P extends {}>(Component: ElementType): ((props: P) => JSX.Element) => {
     const StyledComponent = (props: P) => {
       const [variantProps, localProps] = recipe.splitVariantProps(props)

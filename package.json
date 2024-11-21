@@ -1,7 +1,9 @@
 {
   "name": "vite-template-solid",
+  "type": "module",
   "version": "0.0.0",
   "description": "",
+  "license": "MIT",
   "scripts": {
     "prepare": "panda codegen",
     "start": "vite",
@@ -9,7 +11,6 @@
     "build": "tsc -b && vite build",
     "serve": "vite preview"
   },
-  "license": "MIT",
   "dependencies": {
     "@ark-ui/solid": "4.5.1",
     "globals": "^15.12.0",
@@ -30,6 +31,5 @@
     "vite": "^5.0.11",
     "vite-plugin-solid": "^2.8.2",
     "vite-tsconfig-paths": "^5.1.3"
-  },
-  "type": "module"
+  }
 }
